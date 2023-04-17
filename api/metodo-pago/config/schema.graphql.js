@@ -75,7 +75,7 @@ module.exports = {
             }
           }),
           ...(type && {
-            tipo2: {
+            tipo: {
               $regex: RegExp(type, 'i')
             }
           }),

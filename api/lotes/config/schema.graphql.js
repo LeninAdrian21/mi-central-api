@@ -25,7 +25,15 @@ module.exports = {
   `,
   resolver: {
     Query: {
-      paginationLot: async (obj, {start,limit,internal_code, arrival_date,expiration_date,acquisition_date, cost, shopping_cost,product_name}) => {
+      paginationLot: async (obj, {start,limit,
+          internal_code,//codigo interno
+          arrival_date,//fecha arrivo
+          expiration_date,//fecha de caducidad
+          acquisition_date,//fecha de adquisicion
+          cost,//costo
+          shopping_cost,//costo compras
+          product_name// nombre producto
+        }) => {
         const startIndex = parseInt(start,10)>=0 ? parseInt(start,10) :0;
         const query = {
           ...(internal_code && !isNaN(parseInt(internal_code))) && {
@@ -50,7 +58,7 @@ module.exports = {
             "products.nombre": new RegExp(product_name,'i')
           }),
         }
-        const lots = await strapi.query('lots').find(query);
+        const lots = await strapi.query('lotes').find(query);
         const edges = lots
         .slice(startIndex, startIndex + parseInt(limit))
         .map((lot) => ({ node: lot, cursor:lot.id }));

@@ -37,7 +37,15 @@ module.exports = {
             paginationCamiones:
               async (obj, {start,limit,placa,estado,placa_activa,num_serie,niv,fecha_inicio,fecha_fin,destino,conductor,gastos}) => {
                 const startIndex = parseInt(start,10)>=0 ? parseInt(start,10) :0;
-                const query = {}
+                const query = {
+                  placas:{
+                    $elemMatch:{
+                      placa:{
+                        $regex: new RegExp(placa, 'i')
+                      }
+                    }
+                  }
+                }
                 if(placa){
                     const regex = new RegExp(placa, 'i')
                     query['placas'] = {
